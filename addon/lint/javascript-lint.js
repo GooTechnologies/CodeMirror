@@ -105,7 +105,7 @@
           if (tabpositions.length > 0) {
             var pos = error.character;
             tabpositions.forEach(function(tabposition) {
-              if (pos > tabposition) pos -= 1;
+              if (pos > tabposition) pos -= 3;
             });
             error.character = pos;
           }
