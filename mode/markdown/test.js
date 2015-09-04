@@ -110,7 +110,7 @@
   // Block code using single backtick (shouldn't work)
   MT("blockCodeSingleBacktick",
      "[comment `]",
-     "foo",
+     "[comment foo]",
      "[comment `]");
 
   // Unclosed backticks
@@ -498,14 +498,14 @@
     "",
     "    [variable-3 * bar]",
     "",
-    "       [variable-2 hello]"
+    "       [variable-3 hello]"
   );
   MT("listNested",
     "[variable-2 * foo]",
     "",
     "    [variable-3 * bar]",
     "",
-    "      [variable-3 * foo]"
+    "      [keyword * foo]"
   );
 
   // Code followed by text
@@ -768,7 +768,7 @@
 
   MT("fencedCodeBlocks",
      "[comment ```]",
-     "foo",
+     "[comment foo]",
      "[comment ```]");
 
   // Tests that require XML mode

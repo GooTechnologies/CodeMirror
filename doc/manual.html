@@ -69,7 +69,7 @@
 <section class=first id=overview>
     <h2 style="position: relative">
       User manual and reference guide
-      <span style="color: #888; font-size: 1rem; position: absolute; right: 0; bottom: 0">version 5.5.1</span>
+      <span style="color: #888; font-size: 1rem; position: absolute; right: 0; bottom: 0">version 5.6.1</span>
     </h2>
 
     <p>CodeMirror is a code-editor component that can be embedded in
@@ -2672,7 +2672,8 @@ editor.setOption("extraKeys", {
       <dt id="addon_lint"><a href="../addon/lint/lint.js"><code>lint/lint.js</code></a></dt>
       <dd>Defines an interface component for showing linting warnings,
       with pluggable warning sources
-      (see <a href="../addon/lint/json-lint.js"><code>json-lint.js</code></a>,
+      (see <a href="../addon/lint/html-lint.js"><code>html-lint.js</code></a>,
+      <a href="../addon/lint/json-lint.js"><code>json-lint.js</code></a>,
       <a href="../addon/lint/javascript-lint.js"><code>javascript-lint.js</code></a>,
       <a href="../addon/lint/coffeescript-lint.js"><code>coffeescript-lint.js</code></a>,
       and <a href="../addon/lint/css-lint.js"><code>css-lint.js</code></a>
@@ -2761,9 +2762,10 @@ editor.setOption("extraKeys", {
 
       <dt id="addon_placeholder"><a href="../addon/display/placeholder.js"><code>display/placeholder.js</code></a></dt>
       <dd>Adds a <code>placeholder</code> option that can be used to
-      make text appear in the editor when it is empty and not focused.
-      Also gives the editor a <code>CodeMirror-empty</code> CSS class
-      whenever it doesn't contain any text.
+      make content appear in the editor when it is empty and not
+      focused. It can hold either a string or a DOM node. Also gives
+      the editor a <code>CodeMirror-empty</code> CSS class whenever it
+      doesn't contain any text.
       See <a href="../demo/placeholder.html">the demo</a>.</dd>
 
       <dt id="addon_fullscreen"><a href="../addon/display/fullscreen.js"><code>display/fullscreen.js</code></a></dt>
