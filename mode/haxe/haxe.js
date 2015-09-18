@@ -264,11 +264,12 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   }
   function expression(type) {
     if (atomicTypes.hasOwnProperty(type)) return cont(maybeoperator);
+    if (type == "type" ) return cont(maybeoperator);
     if (type == "function") return cont(functiondef);
     if (type == "keyword c") return cont(maybeexpression);
     if (type == "(") return cont(pushlex(")"), maybeexpression, expect(")"), poplex, maybeoperator);
     if (type == "operator") return cont(expression);
-    if (type == "[") return cont(pushlex("]"), commasep(expression, "]"), poplex, maybeoperator);
+    if (type == "[") return cont(pushlex("]"), commasep(maybeexpression, "]"), poplex, maybeoperator);
     if (type == "{") return cont(pushlex("}"), commasep(objprop, "}"), poplex, maybeoperator);
     return cont();
   }
@@ -358,7 +359,8 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     if (value == "in") return cont();
   }
   function functiondef(type, value) {
-    if (type == "variable") {register(value); return cont(functiondef);}
+    //function names starting with upper-case letters are recognised as types, so cludging them together here.
+    if (type == "variable" || type == "type") {register(value); return cont(functiondef);}
     if (value == "new") return cont(functiondef);
     if (type == "(") return cont(pushlex(")"), pushcontext, commasep(funarg, ")"), poplex, typeuse, statement, popcontext);
   }
