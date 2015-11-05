@@ -69,7 +69,7 @@
 <section class=first id=overview>
     <h2 style="position: relative">
       User manual and reference guide
-      <span style="color: #888; font-size: 1rem; position: absolute; right: 0; bottom: 0">version 5.7.1</span>
+      <span style="color: #888; font-size: 1rem; position: absolute; right: 0; bottom: 0">version 5.8.1</span>
     </h2>
 
     <p>CodeMirror is a code-editor component that can be embedded in
@@ -1311,7 +1311,7 @@ editor.setOption("extraKeys", {
         collapsed or both non-collapsed), the new one will replace the
         old one. When it starts with <code>*</code>, it will always
         replace the previous event (if that had the same origin).
-        Built-in motion uses the <code>"+move"</code> origin.</dd>
+        Built-in motion uses the <code>"+move"</code> origin. User input uses the <code>"+input"</code> origin.</dd>
         <dt id="selection_bias"><code><strong>bias</strong>: number</code></dt>
         <dd>Determine the direction into which the selection endpoints
         should be adjusted when they fall inside
@@ -2313,9 +2313,12 @@ editor.setOption("extraKeys", {
       demo</a>.</dd>
 
       <dt id="addon_comment"><a href="../addon/comment/comment.js"><code>comment/comment.js</code></a></dt>
-      <dd>Addon for commenting and uncommenting code. Adds three
+      <dd>Addon for commenting and uncommenting code. Adds four
       methods to CodeMirror instances:
       <dl>
+        <dt id="toggleComment"><code><strong>toggleComment</strong>(from: {line, ch}, to: {line, ch}, ?options: object)</code></dt>
+        <dd>Tries to uncomment the current selection, and if that
+        fails, line-comments it.</dd>
         <dt id="lineComment"><code><strong>lineComment</strong>(from: {line, ch}, to: {line, ch}, ?options: object)</code></dt>
         <dd>Set the lines in the given range to be line comments. Will
         fall back to <code>blockComment</code> when no line comment
@@ -2353,8 +2356,8 @@ editor.setOption("extraKeys", {
       </dl>
       The addon also defines
       a <code>toggleComment</code> <a href="#commands">command</a>,
-      which will try to uncomment the current selection, and if that
-      fails, line-comments it.</dd>
+      which is a shorthand command for calling
+      <code>toggleComment</code> with no options.</dd>
 
       <dt id="addon_foldcode"><a href="../addon/fold/foldcode.js"><code>fold/foldcode.js</code></a></dt>
       <dd>Helps with code folding. Adds a <code>foldCode</code> method

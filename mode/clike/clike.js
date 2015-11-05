@@ -214,8 +214,16 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       if (state.tokenize != tokenBase && state.tokenize != null) return CodeMirror.Pass;
       var ctx = state.context, firstChar = textAfter && textAfter.charAt(0);
       if (isStatement(ctx.type) && firstChar == "}") ctx = ctx.prev;
+      if (hooks.indent) {
+        var hook = hooks.indent(state, ctx, textAfter);
+        if (typeof hook == "number") return hook
+      }
       var closing = firstChar == ctx.type;
       var switchBlock = ctx.prev && ctx.prev.type == "switchstatement";
+      if (parserConfig.allmanIndentation && /[{(]/.test(firstChar)) {
+        while (ctx.type != "top" && ctx.type != "}") ctx = ctx.prev
+        return ctx.indented
+      }
       if (isStatement(ctx.type))
         return ctx.indented + (firstChar == "{" ? 0 : statementIndentUnit);
       if (ctx.align && (!dontAlignCalls || ctx.type != ")"))
@@ -248,8 +256,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     }
   }
   var cKeywords = "auto if break case register continue return default do sizeof " +
-    "static else struct switch extern typedef float union for " +
-    "goto while enum const volatile";
+    "static else struct switch extern typedef union for goto while enum const volatile";
   var cTypes = "int long char short double float unsigned signed void size_t ptrdiff_t";
 
   function cppHook(stream, state) {
@@ -478,7 +485,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     keywords: words(
 
       /* scala */
-      "abstract case catch class def do else extends false final finally for forSome if " +
+      "abstract case catch class def do else extends final finally for forSome if " +
       "implicit import lazy match new null object override package private protected return " +
       "sealed super this throw trait try type val var while with yield _ : = => <- <: " +
       "<% >: # @ " +
@@ -636,7 +643,10 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
         stream.eatWhile(/[\w\$]/);
         return "keyword";
       },
-      "#": cppHook
+      "#": cppHook,
+      indent: function(_state, ctx, textAfter) {
+        if (ctx.type == "statement" && /^@\w/.test(textAfter)) return ctx.indented
+      }
     },
     modeProps: {fold: "brace"}
   });
